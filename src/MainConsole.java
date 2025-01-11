@@ -5,6 +5,7 @@ public class MainConsole {
     public static void main(String[] args) {
         System.out.println("\n********* Welcome to the Cinema Booking System *********");
         System.out.println("Enter your role: \n\t1.Admin\n\t2.User");
+        System.out.print("Your choice: ");
         Scanner read = new Scanner(System.in);
         int c = read.nextInt();
 

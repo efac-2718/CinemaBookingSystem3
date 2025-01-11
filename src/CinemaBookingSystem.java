@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class CinemaBookingSystem {
 
     private static ArrayList<Movie> movies = new ArrayList<>();
+    private static String[] dataByParts;
     public CinemaBookingSystem(){
         getMoviesFromStorage();
     }
@@ -31,7 +32,7 @@ public class CinemaBookingSystem {
     }
 
     public Movie findMovieByIndex(int index){
-        return movies.get(index+1);
+        return movies.get(index-1);
     }
 
     public static void removeMovie(String name){
@@ -50,15 +51,15 @@ public class CinemaBookingSystem {
 
     public static void addMoviesToStorage(){
         File f = new File("movies.txt");
-        for(Movie m: movies){
             try {
                 FileWriter file = new FileWriter("movies.txt");
-                file.write(m.toString());
+                for(Movie m: movies) {
+                    file.write(m.toString()+"\n");
+                }
                 file.close();
             } catch (IOException e) {
                 System.out.println("File do not exist");
             }
-        }
     }
 
     public static void getMoviesFromStorage(){
@@ -67,33 +68,24 @@ public class CinemaBookingSystem {
             Scanner read = new Scanner(file);
             while (read.hasNextLine()) {
                 String data = read.nextLine();
-                String[] databyparts = data.split("--");
-                String name = databyparts[0];
-                int dateCount = Integer.parseInt(databyparts[1]);
-                int index = 0;
+                dataByParts = data.split("--");
+                String name = dataByParts[0];
+                int dateCount = Integer.parseInt(dataByParts[1]);           // First 2 indexes (0,1)
+                int dateIndexCount = 0;
                 List<Date> dateList = new ArrayList<>();
                 int dateIndex = 2;
-                while(index<dateCount){
-                    String[] dateParts = databyparts[dateIndex].split("/");
-                    int year = Integer.parseInt(dateParts[0]);
-                    int month = Integer.parseInt(dateParts[1]);
-                    int day = Integer.parseInt(dateParts[2]);
-                    Date d = new Date(day,month,year);
-                    int timeCount = Integer.parseInt(databyparts[dateIndex+1]);
-                    dateIndex = dateIndex + timeCount + 1;
-                    int totalIndex = 4;
-                    totalIndex = totalIndex+timeCount+2;
-                    int index1 = 0;
-                    while(index1<timeCount){
-                        String[] timeParts = databyparts[totalIndex].split(":");
-                        int hour = Integer.parseInt(timeParts[0]);
-                        int minutes = Integer.parseInt(timeParts[1]);
-                        Time t = new Time(hour,minutes);
+                while(dateIndexCount<dateCount){
+                    Date d = createDateObject(dateIndex);
+                    int timeCount = Integer.parseInt(dataByParts[dateIndex+1]);
+                    int timeCountUpdateIndex = 1;
+                    while(timeCountUpdateIndex<=timeCount){
+                        Time t = createTimeObject(((dateIndex+1)+timeCountUpdateIndex));
                         d.addTime(t);
-                        index1++;
+                        timeCountUpdateIndex++;
                         }
-                    index++;
                     dateList.add(d);
+                    dateIndex += (timeCount + 2);
+                    dateIndexCount++;
                     }
                 Movie m = new Movie(name);
                 m.addDateList(dateList);
@@ -106,8 +98,23 @@ public class CinemaBookingSystem {
             }
     }
 
-    public static void main(String[] args){
-        CinemaBookingSystem.getMoviesFromStorage();
+    private static Date createDateObject(int dateIndex){
+        String[] dateParts = dataByParts[dateIndex].split("/");
+        int year = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int day = Integer.parseInt(dateParts[2]);
+        Date d = new Date(day,month,year);
+
+        return d;
+    }
+
+    private static Time createTimeObject(int totalIndex){
+        String[] timeParts = dataByParts[totalIndex].split(":");
+        int hour = Integer.parseInt(timeParts[0]);
+        int minutes = Integer.parseInt(timeParts[1]);
+        Time t = new Time(hour,minutes);
+
+        return t;
     }
 
 }

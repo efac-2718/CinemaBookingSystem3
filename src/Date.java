@@ -37,13 +37,13 @@ public class Date {
     }
 
     public String toString1(){
-        return String.format("%04d/%02d/%02d", day, month, year);
+        return String.format("%02d/%02d/%02d", day, month, year);
     }
 
     @Override
     public String toString(){
         addTimeCount();
-        String s = String.format("%04d/%02d/%02d", day, month, year) +"--"+ timeCount;
+        String s = String.format("%02d/%02d/%02d", day, month, year) +"--"+ timeCount;
         for(Time t: times){
             String sTemp = s +"--"+ t;
             s = sTemp;

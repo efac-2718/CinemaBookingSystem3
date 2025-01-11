@@ -56,7 +56,7 @@ public class Movie {
         int index = 1;
         for(Date d: dates){
             for(Time t: d.getTimes()){
-                System.out.println(index+"."+d+" : "+t);
+                System.out.println(index+"."+d.toString1()+" : "+t);
                 index++;
             }
         }
