@@ -45,7 +45,7 @@ public class Date {
         addTimeCount();
         String s = String.format("%02d/%02d/%02d", day, month, year) +"--"+ timeCount;
         for(Time t: times){
-            String sTemp = s +"--"+ t;
+            String sTemp = s +"--"+t;
             s = sTemp;
         }
 

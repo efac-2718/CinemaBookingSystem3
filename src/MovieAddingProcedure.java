@@ -8,6 +8,9 @@ public class MovieAddingProcedure {
     private int numberOfDays;
     private Calendar startDate = Calendar.getInstance();
     List<Date> dates = new ArrayList<>();
+    int numberOfRows;
+    int numberOfColumns;
+    double price;
 
     public MovieAddingProcedure(){
         Scanner read = new Scanner(System.in);
@@ -19,10 +22,14 @@ public class MovieAddingProcedure {
         System.out.print("Year: ");
         int year = read.nextInt();
         startDate.set(year,month-1,date);
+        numberOfColumns = numberOfColumns();
+        numberOfRows = numberOfRows();
+        price = price();
         System.out.print("Enter the number of days the movie will be screening: ");
         numberOfDays = read.nextInt();
         dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
         System.out.println("Successfully initialised dates and times");
+
     }
 
     private List<Calendar> createListOfintances(){
@@ -57,6 +64,27 @@ public class MovieAddingProcedure {
         return newList;
     }
 
+    public int numberOfColumns(){
+        System.out.print("Enter the number of rows in the hall: ");
+        Scanner read = new Scanner(System.in);
+        int number = read.nextInt();
+        return number;
+    }
+
+    public int numberOfRows(){
+        System.out.print("Enter the number of seats in each row: ");
+        Scanner read = new Scanner(System.in);
+        int number = read.nextInt();
+        return number;
+    }
+
+    public double price(){
+        System.out.print("Enter the price of the movie: ");
+        Scanner read = new Scanner(System.in);
+        double price = read.nextInt();
+        return price;
+    }
+
     public List<Date> addTimesToTheDateList(List<Date> list){
 
         List<Date> newList = new ArrayList<>();
@@ -75,6 +103,7 @@ public class MovieAddingProcedure {
                 System.out.print("Minute: ");
                 int minutes = read1.nextInt();
                 Time t = new Time(hour,minutes);
+                t.addScreen(numberOfColumns,numberOfRows,price);
                 d.addTime(t);
                 index++;
             }

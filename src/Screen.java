@@ -1,17 +1,19 @@
 public class Screen extends Theater{
 
+    private int uniqueIdentifier;
+    private static int  count = 0;
     private int numberOfColumns;
     private int numberOfRows;
     private Seat[][] seats;
     private double price;
 
 
-    public Screen(String name,String location, int numberOfScreens,double price,int numberOfColumns,int numberOfRows){
-        super(name,location,numberOfScreens);
+    public Screen(double price,int numberOfColumns,int numberOfRows){
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
         this.seats = new Seat[numberOfColumns][numberOfRows];
         this.price = price;
+        this.uniqueIdentifier = 100+count;
     }
 
     public Seat findSeatByNumber(int column,int row){
@@ -54,4 +56,24 @@ public class Screen extends Theater{
     public double getPrice(){
         return price;
     }
+
+    public int getUniqueIdentifier(){
+        return uniqueIdentifier;
+    }
+
+    public String toString(){
+        String s = uniqueIdentifier+"@"+numberOfRows+"_"+numberOfColumns;
+        int index1 = 0;
+        for(Seat[] column: seats){
+            int index2 = 0;
+            for(Seat row: column){
+                String seatNumber = "@"+index1+"__"+index2+"#"+row;
+                s = s + seatNumber;
+                index2++;
+            }
+            index1++;
+        }
+        return s;
+    }
+
 }

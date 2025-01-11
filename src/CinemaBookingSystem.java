@@ -31,7 +31,7 @@ public class CinemaBookingSystem {
         return null;
     }
 
-    public Movie findMovieByIndex(int index){
+    public static Movie findMovieByIndex(int index){
         return movies.get(index-1);
     }
 
@@ -109,9 +109,10 @@ public class CinemaBookingSystem {
     }
 
     private static Time createTimeObject(int totalIndex){
-        String[] timeParts = dataByParts[totalIndex].split(":");
-        int hour = Integer.parseInt(timeParts[0]);
-        int minutes = Integer.parseInt(timeParts[1]);
+        String[] timeParts1 = dataByParts[totalIndex].split(":");
+        String[] timeParts2 = timeParts1[1].split("~");
+        int hour = Integer.parseInt(timeParts1[0]);
+        int minutes = Integer.parseInt(timeParts2[0]);
         Time t = new Time(hour,minutes);
 
         return t;

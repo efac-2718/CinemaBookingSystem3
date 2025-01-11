@@ -5,14 +5,17 @@ public class Movie {
 
     private String name;
     private List<Date> dates;
-    private Screen screen = new Screen("K-zone","Kandana",4, 2000,10,10);
+    private Theater screen;
     private int dateCount;
+    int datePrintingCount;
+    int timePrintingCount;
+    int[][] printingPosition;
+
     public Movie(String name){
         this.name = name;
         this.dates = new ArrayList<>();
 
     }
-
     public void addDate(Date date){
         dates.add(date);
     }
@@ -30,12 +33,12 @@ public class Movie {
     }
 
 
-    public Screen getScreen(){
+    public Theater getScreen(){
         return screen;
     }
 
     public double getPrice(){
-        Screen screen1 = getScreen();
+        Screen screen1 = (Screen) getScreen();
         return screen1.getPrice();
     }
 
@@ -54,11 +57,16 @@ public class Movie {
     public void toString2(){
 
         int index = 1;
+        datePrintingCount = 0;
         for(Date d: dates){
+            timePrintingCount = 0;
             for(Time t: d.getTimes()){
                 System.out.println(index+"."+d.toString1()+" : "+t);
+                timePrintingCount++;
+                printingPosition[datePrintingCount][timePrintingCount] = index;
                 index++;
             }
+            datePrintingCount++;
         }
     }
 
@@ -69,4 +77,25 @@ public class Movie {
     public int getDateCount(){
         return dateCount;
     }
+
+    public int[] getTimeObject(int n){
+
+        int[] index;
+        int[] index0 = new int[]{0,0};
+        int index1 = 0;
+        for(int[] i:printingPosition){
+            int index2 = 0;
+            for(int ii:i){
+                if(ii==n){
+                    index = new int[]{index1,index2};
+                    return index;
+                }
+                index2++;
+            }
+            index1++;
+        }
+        return index0;
+    }
+
+
 }

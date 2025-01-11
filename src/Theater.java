@@ -5,10 +5,14 @@ public class Theater {
     private int numberOfScreens;
 
 
-    public Theater(String name,String location, int numberOfScreens){
+    public Theater(String name,String location){
         this.name = name;
         this.location = location;
-        this.numberOfScreens = numberOfScreens;
+    }
+
+    public Theater(){
+        this.name = "Sample Theater";
+        this.location = "Sample location";
     }
 
 }
