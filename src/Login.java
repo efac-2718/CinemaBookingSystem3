@@ -6,41 +6,37 @@ public class Login {
 
     String name;
     private String telephoneNumber;
-    int userID;
+    String userID;
     private String emailAddress;
     private String password;
-    private static int count = loadCounter();
 
     public Login(){
-        this.name = null;
-        this.telephoneNumber = null;
-        this.userID = 1000+count;
-        this.password = null;
-        this.emailAddress = null;
+        this.name = "NoUser";
+        this.telephoneNumber = "0000000000";
+        this.userID = "999";
+        this.password = "123";
+        this.emailAddress = "email";
     }
 
-    public Login(String name,String telephoneNumber,int userID,String password, String emailAddress){
+    public Login(String name,String telephoneNumber,String userID,String password, String emailAddress){
         this.name = name;
         this.telephoneNumber = telephoneNumber;
-        this.userID = 1000+count;
+        this.userID= userID;
         this.password = password;
         this.emailAddress = emailAddress;
-        count++;
-        saveCounter(count);
     }
 
     public static Login addUser(){
 
         Scanner read = new Scanner(System.in);
         System.out.print("Enter name: ");
-        String name = read.next();
+        String name = read.nextLine();
         System.out.print("Enter telephone Number: ");
-        String tnumber = read.next();
+        String tnumber = read.nextLine();
         System.out.print("Enter email: ");
-        String email = read.next();
-        int userID = 1000+count;
-        count++;
-        System.out.println("Your username is "+userID);
+        String email = read.nextLine();
+        System.out.println("Enter userID: ");
+        String userID = read.next();
         System.out.print("Enter Password:");
         String password = read.next();
         Login user = new Login(name,tnumber,userID,password,email);
@@ -62,7 +58,7 @@ public class Login {
         }
     }
 
-    public static ArrayList<String> getUserInfo(int userID){
+    public static ArrayList<String> getUserInfo(String userID){
 
         ArrayList<String> list = new ArrayList<>();
         try {
@@ -82,7 +78,12 @@ public class Login {
         return list;
     }
 
-    public static Login getLoginObjectFromStorage(int userID){
+    public static Login getSampleLoginObject(){
+        Login l = new Login();
+        return l;
+    }
+
+    public static Login getLoginObjectFromStorage(String userID){
         ArrayList<String> list = new ArrayList<>();
         list = getUserInfo(userID);
         Login loginObject = new Login(list.get(0),list.get(1),userID,list.get(4), list.get(3));
@@ -97,26 +98,6 @@ public class Login {
             System.out.println("Deleted the file: " + myObj.getName());
         } else {
             System.out.println("Failed to delete the file.");
-        }
-    }
-
-    private static int loadCounter() {
-        File file = new File("counter.txt");
-        if (file.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                return Integer.parseInt(reader.readLine());
-            } catch (IOException | NumberFormatException e) {
-                System.err.println("Error reading counter file. Starting from 0.");
-            }
-        }
-        return 0;
-    }
-
-    private static void saveCounter(int counter) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("counter.txt"))) {
-            writer.write(Integer.toString(counter));
-        } catch (IOException e) {
-            System.err.println("Error saving counter to file.");
         }
     }
 

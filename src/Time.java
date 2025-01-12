@@ -2,7 +2,7 @@ public class Time {
 
     private int hour;
     private int minutes;
-    private Theater screen;
+    Screen screen;
 
     public Time(int hour,int minutes){
         this.hour = hour;
@@ -11,6 +11,10 @@ public class Time {
 
     public void addScreen(int numberOfColumns, int numberOfRows){
         this.screen = new Screen(numberOfColumns,numberOfRows);
+
+    }
+
+    public void initialiseScreenObject(){
 
     }
 

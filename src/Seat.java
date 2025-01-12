@@ -4,14 +4,21 @@ public class Seat {
 
     int column;
     int row;
-    boolean booked = false;
+    boolean booked;
     Login login;
 
     public Seat (int column,int row){
         this.column = column;
         this.row = row;
         this.booked = false;
-        this.login = Login.getLoginObjectFromStorage(999);
+        this.login = Login.getSampleLoginObject();
+    }
+
+    public Seat (int column, int row,String userID){
+        this.column = column;
+        this.row = row;
+        this.booked = true;
+        this.login = Login.getLoginObjectFromStorage(userID);
     }
 
     public void reserveSeat(Login user){

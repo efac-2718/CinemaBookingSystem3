@@ -6,7 +6,7 @@ public class MainProcedure {
     int[] position;
     Movie movie;
 
-    public MainProcedure(int userID){
+    public MainProcedure(String userID){
 
         System.out.println("Here is a list of all movies:");
         CinemaBookingSystem.showAllMovies();
@@ -24,6 +24,7 @@ public class MainProcedure {
         String s1 = "yes";
         while(!((s1.equalsIgnoreCase("no"))|s1.equalsIgnoreCase("n"))){
             System.out.print("Enter the seat number you wish to reserve: ");
+            read.nextLine();
             int seatNumber = read.nextInt();
             Login l = Login.getLoginObjectFromStorage(userID);
             findAndReserveRequestedSeat(seatNumber,l);

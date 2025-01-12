@@ -12,10 +12,11 @@ public class Admin {
 
         System.out.print("Enter the number of your choice: ");
         int c = read.nextInt();
+        read.nextLine();
 
         if(c == 1){
             System.out.print("\nEnter the name of the movie: ");
-            String name = read.next();
+            String name = read.nextLine();
             MovieAddingProcedure am = new MovieAddingProcedure();
             Movie m = new Movie(name);
             m.addDateList(am.dates);

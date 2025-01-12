@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class User {
 
-    static int userID;
+    static String userID;
 
     static boolean state = false;
 
@@ -30,7 +30,7 @@ public class User {
         }
     }
 
-    public static int getUserID() {
+    public static String getUserID() {
         return userID;
     }
 }

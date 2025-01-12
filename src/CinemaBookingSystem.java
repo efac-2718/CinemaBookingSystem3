@@ -42,7 +42,7 @@ public class CinemaBookingSystem {
     }
 
     public static void showAllMovies(){
-        int index = 0;
+        int index = 1;
         for(Movie m: movies){
             System.out.println(index +"."+m.getName());
             index++;
@@ -122,16 +122,18 @@ public class CinemaBookingSystem {
         int numberOfColumns = Integer.parseInt((timeParts4[0]));
         t.addScreen(numberOfColumns,numberOfRows);
         int index = 2;
-        while(index<timeParts3.length-2){
-            String[] timeParts5 = timeParts3[2].split("#");
+        while(index<timeParts3.length){
+            String[] timeParts5 = timeParts3[index].split("#");
             String[] seatParts1 = timeParts5[0].split("__");
             int columnNumber = Integer.parseInt(seatParts1[0]);
             int rowNumber = Integer.parseInt(seatParts1[1]);
             String username1 = timeParts5[1];
             String username2 = username1.trim();
-            Screen screen = (Screen) t.getScreen();
-            int userID = Integer.parseInt(username2);
-            screen.addSeats(userID, columnNumber, rowNumber);
+            if(username2.equals("999")){
+                t.screen.initialiseSeat(columnNumber,rowNumber);
+            }else{
+                t.screen.initialiseSeat(columnNumber,rowNumber,username2);
+            }
 
             index++;
         }
