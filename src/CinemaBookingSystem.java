@@ -42,7 +42,7 @@ public class CinemaBookingSystem {
     }
 
     public static void showAllMovies(){
-        int index = 1;
+        int index = 0;
         for(Movie m: movies){
             System.out.println(index +"."+m.getName());
             index++;
@@ -70,10 +70,11 @@ public class CinemaBookingSystem {
                 String data = read.nextLine();
                 dataByParts = data.split("--");
                 String name = dataByParts[0];
-                int dateCount = Integer.parseInt(dataByParts[1]);           // First 2 indexes (0,1)
+                double price = Double.parseDouble(dataByParts[1]);
+                int dateCount = Integer.parseInt(dataByParts[2]);           // First 2 indexes (0,1)
                 int dateIndexCount = 0;
                 List<Date> dateList = new ArrayList<>();
-                int dateIndex = 2;
+                int dateIndex = 3;
                 while(dateIndexCount<dateCount){
                     Date d = createDateObject(dateIndex);
                     int timeCount = Integer.parseInt(dataByParts[dateIndex+1]);
@@ -89,6 +90,7 @@ public class CinemaBookingSystem {
                     }
                 Movie m = new Movie(name);
                 m.addDateList(dateList);
+                m.addPrice(price);
                 movies.add(m);
                 }
             read.close();
@@ -114,6 +116,25 @@ public class CinemaBookingSystem {
         int hour = Integer.parseInt(timeParts1[0]);
         int minutes = Integer.parseInt(timeParts2[0]);
         Time t = new Time(hour,minutes);
+        String[] timeParts3 = timeParts2[1].split("@");
+        String[] timeParts4 = timeParts3[1].split("_");
+        int numberOfRows = Integer.parseInt(timeParts4[1]);
+        int numberOfColumns = Integer.parseInt((timeParts4[0]));
+        t.addScreen(numberOfColumns,numberOfRows);
+        int index = 2;
+        while(index<timeParts3.length-2){
+            String[] timeParts5 = timeParts3[2].split("#");
+            String[] seatParts1 = timeParts5[0].split("__");
+            int columnNumber = Integer.parseInt(seatParts1[0]);
+            int rowNumber = Integer.parseInt(seatParts1[1]);
+            String username1 = timeParts5[1];
+            String username2 = username1.trim();
+            Screen screen = (Screen) t.getScreen();
+            int userID = Integer.parseInt(username2);
+            screen.addSeats(userID, columnNumber, rowNumber);
+
+            index++;
+        }
 
         return t;
     }

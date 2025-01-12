@@ -1,23 +1,45 @@
 public class Screen extends Theater{
 
-    private int uniqueIdentifier;
-    private static int  count = 0;
     private int numberOfColumns;
     private int numberOfRows;
     private Seat[][] seats;
-    private double price;
+    int index = 0;
 
 
-    public Screen(double price,int numberOfColumns,int numberOfRows){
+    public Screen(int numberOfColumns,int numberOfRows) {
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
         this.seats = new Seat[numberOfColumns][numberOfRows];
-        this.price = price;
-        this.uniqueIdentifier = 100+count;
+        int index1 = 0;
+        for (int i = 0; i < numberOfColumns; i++) {
+            for (int j = 0; j < numberOfRows; j++) {
+                seats[i][j] = new Seat(i + 1, j + 1);
+            }
+        }
+
+    }
+
+    public void addSeats(int userID,int column,int row){
+            Login l = Login.getLoginObjectFromStorage(userID);
+            Seat seat = findSeatByNumber(column,row);
+            seat.reserveSeat(l);
+
     }
 
     public Seat findSeatByNumber(int column,int row){
             return seats[column][row];
+    }
+
+    public void reserveTheSeatAtRequiredPosition(int index,Login l){
+        int index1 = 0;
+        for(Seat[] s1: seats){
+            for(Seat s2:s1){
+                if(index1 == index){
+                    s2.reserveSeat(l);
+                }
+                index1++;
+            }
+        }
     }
 
     public void showAllSeatsWithStatus(){
@@ -40,34 +62,24 @@ public class Screen extends Theater{
     }
 
     public void showAllFreeSeats(){
-        int columnIndex = 0;
-        int rowIndex = 0;
         for(Seat[] seat: seats){
             for(Seat s: seat) {
-                if(!s.getStatus()) {
-                    System.out.println("Seat Number: " + columnIndex + rowIndex);
+                if (!s.getStatus()) {
+                    System.out.println("Seat Number: " + index);
                 }
-                rowIndex++;
+                index++;
             }
-            columnIndex++;
         }
     }
 
-    public double getPrice(){
-        return price;
-    }
-
-    public int getUniqueIdentifier(){
-        return uniqueIdentifier;
-    }
 
     public String toString(){
-        String s = uniqueIdentifier+"@"+numberOfRows+"_"+numberOfColumns;
+        String s = "@"+numberOfRows+"_"+numberOfColumns;
         int index1 = 0;
         for(Seat[] column: seats){
             int index2 = 0;
             for(Seat row: column){
-                String seatNumber = "@"+index1+"__"+index2+"#"+row;
+                String seatNumber = "@"+index1+"__"+index2+row;
                 s = s + seatNumber;
                 index2++;
             }

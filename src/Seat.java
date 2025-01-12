@@ -2,27 +2,21 @@ import java.util.Calendar;
 
 public class Seat {
 
-    boolean booked;
+    int column;
+    int row;
+    boolean booked = false;
     Login login;
 
-    public Seat (){
+    public Seat (int column,int row){
+        this.column = column;
+        this.row = row;
         this.booked = false;
-        this.login = null;
-    }
-
-    public Seat(Login userID){
-        this.booked = true;
-        this.login = userID;
+        this.login = Login.getLoginObjectFromStorage(999);
     }
 
     public void reserveSeat(Login user){
-        if(booked){
-            System.out.println("Error. Seat already booked");
-        }
-        else{
             booked = true;
             login = user;
-        }
     }
 
     public boolean getStatus(){

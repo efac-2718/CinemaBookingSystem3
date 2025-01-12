@@ -5,7 +5,7 @@ public class Movie {
 
     private String name;
     private List<Date> dates;
-    private Theater screen;
+    private double price;
     private int dateCount;
     int datePrintingCount;
     int timePrintingCount;
@@ -32,21 +32,19 @@ public class Movie {
         return name;
     }
 
-
-    public Theater getScreen(){
-        return screen;
+    public double getPrice(){
+        return price;
     }
 
-    public double getPrice(){
-        Screen screen1 = (Screen) getScreen();
-        return screen1.getPrice();
+    public void addPrice(double price){
+        this.price = price;
     }
 
     @Override
     public String toString(){
 
         addDateCount();
-        String s = getName()+"--"+dateCount;
+        String s = getName()+"--"+getPrice()+"--"+dateCount;
         for(Date d: dates){
             String sTemp = s + "--" + d;
             s = sTemp;
@@ -56,14 +54,15 @@ public class Movie {
 
     public void toString2(){
 
+        printingPosition = new int[dates.size()][10];
         int index = 1;
         datePrintingCount = 0;
         for(Date d: dates){
             timePrintingCount = 0;
             for(Time t: d.getTimes()){
-                System.out.println(index+"."+d.toString1()+" : "+t);
-                timePrintingCount++;
+                System.out.println(index+"."+d.toString1()+" : "+t.toString2());
                 printingPosition[datePrintingCount][timePrintingCount] = index;
+                timePrintingCount++;
                 index++;
             }
             datePrintingCount++;

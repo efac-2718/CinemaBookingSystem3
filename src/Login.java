@@ -9,12 +9,12 @@ public class Login {
     int userID;
     private String emailAddress;
     private String password;
-    private static int count = 0;
+    private static int count = loadCounter();
 
     public Login(){
         this.name = null;
         this.telephoneNumber = null;
-        this.userID = 0;
+        this.userID = 1000+count;
         this.password = null;
         this.emailAddress = null;
     }
@@ -22,9 +22,11 @@ public class Login {
     public Login(String name,String telephoneNumber,int userID,String password, String emailAddress){
         this.name = name;
         this.telephoneNumber = telephoneNumber;
-        this.userID = userID;
+        this.userID = 1000+count;
         this.password = password;
         this.emailAddress = emailAddress;
+        count++;
+        saveCounter(count);
     }
 
     public static Login addUser(){
@@ -74,10 +76,18 @@ public class Login {
             }
             read.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred. No such file Exist. Enter correct username");
         }
 
         return list;
+    }
+
+    public static Login getLoginObjectFromStorage(int userID){
+        ArrayList<String> list = new ArrayList<>();
+        list = getUserInfo(userID);
+        Login loginObject = new Login(list.get(0),list.get(1),userID,list.get(4), list.get(3));
+
+        return loginObject;
     }
 
     public static void removeUser(String user){
@@ -87,6 +97,26 @@ public class Login {
             System.out.println("Deleted the file: " + myObj.getName());
         } else {
             System.out.println("Failed to delete the file.");
+        }
+    }
+
+    private static int loadCounter() {
+        File file = new File("counter.txt");
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                return Integer.parseInt(reader.readLine());
+            } catch (IOException | NumberFormatException e) {
+                System.err.println("Error reading counter file. Starting from 0.");
+            }
+        }
+        return 0;
+    }
+
+    private static void saveCounter(int counter) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("counter.txt"))) {
+            writer.write(Integer.toString(counter));
+        } catch (IOException e) {
+            System.err.println("Error saving counter to file.");
         }
     }
 

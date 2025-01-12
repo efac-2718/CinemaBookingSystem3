@@ -9,8 +9,9 @@ public class Time {
         this.minutes = minutes;
     }
 
-    public void addScreen(int numberOfColumns, int numberOfRows, double price){
-        screen = new Screen(price,numberOfColumns,numberOfRows);
+    public void addScreen(int numberOfColumns, int numberOfRows){
+        this.screen = new Screen(numberOfColumns,numberOfRows);
+
     }
 
     public int getHour(){
@@ -24,6 +25,11 @@ public class Time {
     @Override
     public String toString(){
         String s = String.format("%02d:%02d", hour,minutes)+"~"+screen;
+        return s;
+    }
+
+    public String toString2(){
+        String s = String.format("%02d:%02d", hour,minutes);
         return s;
     }
 

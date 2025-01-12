@@ -6,9 +6,8 @@ public class MainProcedure {
     int[] position;
     Movie movie;
 
-    public MainProcedure(){
+    public MainProcedure(int userID){
 
-        CinemaBookingSystem.getMoviesFromStorage();
         System.out.println("Here is a list of all movies:");
         CinemaBookingSystem.showAllMovies();
         System.out.print("Select movie(enter number): ");
@@ -22,8 +21,19 @@ public class MainProcedure {
         position = movie.getTimeObject(occurence);
         System.out.println("Here is a list of all free seats");
         findAndDisplaySeats();
-        System.out.print("Enter the seat number you wish to reserve: ");
-        int seatNumber = read.nextInt();
+        String s1 = "yes";
+        while(!((s1.equalsIgnoreCase("no"))|s1.equalsIgnoreCase("n"))){
+            System.out.print("Enter the seat number you wish to reserve: ");
+            int seatNumber = read.nextInt();
+            Login l = Login.getLoginObjectFromStorage(userID);
+            findAndReserveRequestedSeat(seatNumber,l);
+            CinemaBookingSystem.addMoviesToStorage();
+            System.out.println("Reserved seat number: "+seatNumber);
+            System.out.print("Do you want to reserve another seat?(N/Y): ");
+            s1 = read.next();
+
+        }
+        System.out.println("Seat(/s) reservation successful");
 
     }
 
@@ -34,23 +44,11 @@ public class MainProcedure {
         requiredScreen.showAllFreeSeats();
     }
 
-    public Seat findRequestedSeat(int seatNumber){
-        if(seatNumber>=0 && seatNumber<100){
-            int column = seatNumber/10;
-            int row = seatNumber%10;
+    public void findAndReserveRequestedSeat(int seatNumber,Login l) {
+
             List<Date> dates = movie.getDate();
             List<Time> times = (dates.get(position[0])).getTimes();
             Screen requiredScreen = (Screen) times.get(position[1]).getScreen();
-            return requiredScreen.findSeatByNumber(column,row);
-        }
-        if(seatNumber>=100 && seatNumber<1000){
-            int column = seatNumber/100;
-            int row = seatNumber%100;
-            List<Date> dates = movie.getDate();
-            List<Time> times = (dates.get(position[0])).getTimes();
-            Screen requiredScreen = (Screen) times.get(position[1]).getScreen();
-            return requiredScreen.findSeatByNumber(column,row);
-        }
-        if(seatNumber>=)
+            requiredScreen.reserveTheSeatAtRequiredPosition(seatNumber,l);
     }
 }

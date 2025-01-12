@@ -103,7 +103,7 @@ public class MovieAddingProcedure {
                 System.out.print("Minute: ");
                 int minutes = read1.nextInt();
                 Time t = new Time(hour,minutes);
-                t.addScreen(numberOfColumns,numberOfRows,price);
+                t.addScreen(numberOfColumns,numberOfRows);
                 d.addTime(t);
                 index++;
             }

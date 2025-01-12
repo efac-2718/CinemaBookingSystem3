@@ -3,13 +3,14 @@ import java.util.Scanner;
 
 public class Authenticator {
 
+    static int userID;
+
     static ArrayList<String> details = new ArrayList<>();
 
     public static ArrayList<String> getUserInfo(){
-
-        System.out.println("Enter the user ID: ");
+        System.out.print("Enter the user ID: ");
         Scanner read = new Scanner(System.in);
-        int userID = read.nextInt();
+        userID = read.nextInt();
         details = Login.getUserInfo(userID);
 
         return details;
@@ -29,5 +30,7 @@ public class Authenticator {
         }
     }
 
-
+    public static int getUserID() {
+        return userID;
+    }
 }
