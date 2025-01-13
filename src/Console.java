@@ -17,7 +17,7 @@ public class Console {
         if(c == 2){
             User u1 = new User();
             if (User.state){
-                MainProcedure mp = new MainProcedure(User.getUserID());
+                u1.mainProcedure(User.getUserID());
             }
         }
     }
