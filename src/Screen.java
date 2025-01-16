@@ -10,6 +10,12 @@ public class Screen extends Theater{
         this.numberOfRows = numberOfRows;
         this.numberOfColumns = numberOfColumns;
         this.seats = new Seat[numberOfColumns][numberOfRows];
+        for(int i = 0 ; i<numberOfColumns;i++){
+            for(int j = 0 ; j<numberOfRows; j++){
+                seats[i][j] = new Seat(i,j);
+            }
+        }
+
 
     }
     public void initialiseSeat(int columnNumber, int rowNumber){
@@ -72,8 +78,6 @@ public class Screen extends Theater{
         }
 
     }
-
-
     public String toString(){
         String s = "@"+numberOfRows+"_"+numberOfColumns;
         int index1 = 0;

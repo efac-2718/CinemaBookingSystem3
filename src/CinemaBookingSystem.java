@@ -125,8 +125,8 @@ public class CinemaBookingSystem {
         while(index<timeParts3.length){
             String[] timeParts5 = timeParts3[index].split("#");
             String[] seatParts1 = timeParts5[0].split("__");
-            int columnNumber = Integer.parseInt(seatParts1[0]);
-            int rowNumber = Integer.parseInt(seatParts1[1]);
+            int columnNumber = Integer.parseInt(seatParts1[1]);
+            int rowNumber = Integer.parseInt(seatParts1[0]);
             String username1 = timeParts5[1];
             String username2 = username1.trim();
             if(username2.equals("999")){

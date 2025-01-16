@@ -14,10 +14,6 @@ public class Time {
 
     }
 
-    public void initialiseScreenObject(){
-
-    }
-
     public int getHour(){
         return hour;
     }
