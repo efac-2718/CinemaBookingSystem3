@@ -74,10 +74,13 @@ public class Screen extends Theater{
             int rowLenght = seats[i].length;// Outer loop for rows
             for (int j = 0; j < rowLenght; j++) { // Inner loop for seats in each row
                 if (!seats[i][j].getStatus()) {
-                    System.out.println("Seat Number: " + seats[i][j].column+""+seats[i][j].row);
+                    System.out.print(seats[i][j].column+""+seats[i][j].row+"\t\t");
+                }else{
+                    System.out.print("X"+"\t\t");
                 }
                 index++;
             }
+            System.out.println();
         }
 
     }
