@@ -25,7 +25,7 @@ public class Console {
         CinemaBookingSystem.getMoviesFromStorage();
 
         System.out.println("\n********* Welcome to the Cinema Booking System *********");
-        System.out.println("Enter your role: \n\t1.Admin\n\t2.User\n\t3.Exit");
+        System.out.println("Enter your role: \n\t1.Admin\n\t2.User\n\t3.Exit\n");
 
         int c=0;
         do {
@@ -81,11 +81,12 @@ public class Console {
 
     public void admin() {
         int c = 0;
-        while (!(c == 4)) {
+        while (!(c == 5)) {
             System.out.println("\n1.Add new movie");
             System.out.println("2.Show list of All movies");
             System.out.println("3.Remove movie");
-            System.out.println("4.Exit");
+            System.out.println("4.Change admin password");
+            System.out.println("5.Exit");
 
             Scanner read = new Scanner(System.in);
             System.out.print("Enter the number of your choice: ");
@@ -108,13 +109,18 @@ public class Console {
 
                 }
                 else if (c == 3) {
-                            System.out.println("Remove Movie");
-                            CinemaBookingSystem.showAllMovies();
-                            System.out.println("Enter the name of the movie: ");
-                            String name = read.next();
-                            CinemaBookingSystem.removeMovie(name);
+                    System.out.println("Remove Movie");
+                    CinemaBookingSystem.showAllMovies();
+                    System.out.print("Enter the number of the movie you want to select: ");
+                    int movieNumber = read.nextInt();
+                    while(!CinemaBookingSystem.removeMovie(movieNumber)){
+                        System.out.println("Invalid Input");
+                    }
 
-                }else if (c == 4){
+
+                }else if(c == 4){
+                    Login.changeAdminPassword();
+                }else if (c == 5){
                     System.out.println("Closing Application .....");
                 }
                 else{
@@ -191,8 +197,7 @@ public class Console {
             numberOfColumns = numberOfColumns();
             numberOfRows = numberOfRows();
             price = price();
-            System.out.print("Enter the number of days the movie will be screening: ");
-            numberOfDays = read.nextInt();
+            numberOfDays = screeningnumberOfDays();
             dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
             System.out.println("Successfully initialised dates and times");
         } catch (Exception e) {
@@ -231,47 +236,121 @@ public class Console {
 
         return newList;
     }
+    public int screeningnumberOfDays(){
+        int noScreening = getnubData("days the movie will be screening",70);
+        return noScreening;
 
-    public int numberOfColumns(){
-        System.out.print("Enter the number of rows in the hall: ");
-        Scanner read = new Scanner(System.in);
-        int number = read.nextInt();
+    }
+    public int numberOfColumns() {
+        int number = getnubData("Columns in the hall",999);
         return number;
     }
-
     public int numberOfRows(){
-        System.out.print("Enter the number of seats in each row: ");
-        Scanner read = new Scanner(System.in);
-        int number = read.nextInt();
+        int number = getnubData("Row in the hall",999);
         return number;
     }
+    public int getnubData(String Input, int endNum){
+        Scanner read = new Scanner(System.in);
+        int number = -1;
+        while (true) {
+            System.out.printf("Enter the number of %s (1-%d): ",Input,endNum);
+            if (read.hasNextInt()) {
+                number = read.nextInt();
+                if (number >= 1 && number <= endNum) {
+                    break;
+                } else {
+                    System.out.printf("Invalid input. Please enter a number between 1 and %d.",endNum);
+                }
+            } else {
+                System.out.println("Invalid input. Please enter an integer.");
+                read.next();
+            }
+        }
+        return number;
+    }
+
 
     public double price(){
-        System.out.print("Enter the price of the movie: ");
         Scanner read = new Scanner(System.in);
-        double price = read.nextInt();
-        return price;
+        double priceM = 0.00;
+        while (true) {
+            System.out.print("Enter the price of the movie:  ");
+            if (read.hasNextDouble()) {
+                priceM = read.nextDouble();
+                if (priceM >= 1 && priceM <= 99999) {
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter a Price, Valid price range: 1 and 99999.");
+                }
+            } else {
+                System.out.println("Invalid input. Enter Price Correctly");
+                read.next();
+            }
+        }
+        return priceM;
     }
 
-    public List<Date> addTimesToTheDateList(List<Date> list){
 
+
+    public List<Date> addTimesToTheDateList(List<Date> list) {
         List<Date> newList = new ArrayList<>();
+        Scanner read = new Scanner(System.in);
 
-        System.out.println("How many times will the movie screen on,");
-        for(Date d: list){
-            System.out.print(d.toString1()+" :");
-            Scanner read = new Scanner(System.in);
-            int times = read.nextInt();
+        System.out.println("How many times will the movie screen on?");
+        for (Date d : list) {
+            System.out.print(d.toString() + " : ");
+            int times;
+
+            while (true) {
+                if (read.hasNextInt()) {
+                    times = read.nextInt();
+                    if (times > 0) {
+                        break; // check input is grater than zro and then true exit the loop
+                    } else {
+                        System.out.println("Invalid input. Please enter a positive integer for the number of times.");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter an integer.");
+                    read.next();
+                }
+            }
+
             int index = 0;
-            while(index<times){
-                System.out.println("Enter time "+(index+1)+" , in (hour:minute) format: ");
-                Scanner read1 = new Scanner(System.in);
-                System.out.print("Hour: ");
-                int hour = read1.nextInt();
-                System.out.print("Minute: ");
-                int minutes = read1.nextInt();
-                Time t = new Time(hour,minutes);
-                t.addScreen(numberOfColumns,numberOfRows);
+            while (index < times) {
+                System.out.println("Enter time " + (index + 1) + " in (hour:minute) format: ");
+                int hour = -1, minutes = -1;
+                while (true) {
+                    System.out.print("Hour: ");
+                    if (read.hasNextInt()) {
+                        hour = read.nextInt();
+                        if (hour >= 0 && hour <= 6) {
+                            break; // check correct hour
+                        } else {
+                            System.out.println("Invalid input. Hour must be between 0 and 6.");
+                        }
+                    } else {
+                        System.out.println("Invalid input. Please enter an integer for hour.");
+                        read.next();
+                    }
+                }
+
+
+                while (true) {
+                    System.out.print("Minute: ");
+                    if (read.hasNextInt()) {
+                        minutes = read.nextInt();
+                        if (minutes >= 0 && minutes <= 59) {
+                            break;
+                        } else {
+                            System.out.println("Invalid input. Minutes must be between 0 and 59.");
+                        }
+                    } else {
+                        System.out.println("Invalid input. Please enter an integer for minutes.");
+                        read.next();
+                    }
+                }
+
+                Time t = new Time(hour, minutes);
                 d.addTime(t);
                 index++;
             }
@@ -328,19 +407,7 @@ public class Console {
             }
         }while (!((c1 == 1)||(c1 == 2)||(c1 ==3)));
     }
-    public void cleanscereen(){
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (IOException | InterruptedException e) {
-        }
-    }
-    public static String getUserID() {
-        return userID;
-    }
+
 
     public void mainProcedure(String userID){
 
@@ -395,14 +462,14 @@ public class Console {
     }
 
     public static ArrayList<String> getUserInfo(){
-       do{
-        System.out.print("Enter the user ID: ");
-        Scanner read = new Scanner(System.in);
-        userID1 = read.next();
-        details = Login.getUserInfo(userID1);
-        if (details.isEmpty()){ //check return
-            System.out.println("Enter valid UserID");
-        }
+        do{
+            System.out.print("Enter the user ID: ");
+            Scanner read = new Scanner(System.in);
+            userID1 = read.next();
+            details = Login.getUserInfo(userID1);
+            if (details.isEmpty()){ //check return
+                System.out.println("Enter valid UserID");
+            }
 
         }while((details.isEmpty()));
         return details;

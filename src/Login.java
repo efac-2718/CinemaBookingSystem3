@@ -152,6 +152,23 @@ public class Login implements Authenticate{
         return reVal;
     }
 
+    public static void changeAdminPassword(){
+        String admin = "admin.txt";
+        Scanner read = new Scanner(System.in);
+        System.out.print("Enter new password: ");
+        String password = read.next();
+        String password1 = password.trim();
+        try {
+            FileWriter file = new FileWriter(admin);
+            file.write("admin"+"\n"+password1);
+            System.out.println("Successfully changed password");
+            file.close();
+        }
+        catch (IOException e){
+            System.out.println("Error changing password");
+        }
+    }
+
     public static String[] Admin() {
         ArrayList<String> list = new ArrayList<>();
         try {

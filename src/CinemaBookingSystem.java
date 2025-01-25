@@ -45,6 +45,23 @@ public class CinemaBookingSystem {
         }
     }
 
+    public static boolean removeMovie(int movieNumber){
+        if(movieNumber>0 && movieNumber<=movies.size()){
+            movies.remove(movieNumber-1);
+            addMoviesToStorage();
+            System.out.println("Movie removal successful");
+            return true;
+        }
+        else if(movies.size() == 0){
+            System.out.println("Movie list is empty");
+            return true;
+
+        }else{
+            System.out.println("Invalid input");
+            return false;
+        }
+    }
+
     public static void showAllMovies(){
         int index = 1;
         for(Movie m: movies){
