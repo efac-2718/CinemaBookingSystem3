@@ -11,7 +11,7 @@ public class CinemaBookingSystem {
     private static ArrayList<Movie> movies = new ArrayList<>();
     private static String[] dataByParts;
     public CinemaBookingSystem(){
-        getMoviesFromStorage();
+        //getMoviesFromStorage();
     }
 
     public static void addMovie(Movie movie){
@@ -118,15 +118,15 @@ public class CinemaBookingSystem {
         Time t = new Time(hour,minutes);
         String[] timeParts3 = timeParts2[1].split("@");
         String[] timeParts4 = timeParts3[1].split("_");
-        int numberOfRows = Integer.parseInt(timeParts4[1]);
-        int numberOfColumns = Integer.parseInt((timeParts4[0]));
+        int numberOfRows = Integer.parseInt(timeParts4[0]);
+        int numberOfColumns = Integer.parseInt((timeParts4[1]));
         t.addScreen(numberOfColumns,numberOfRows);
         int index = 2;
         while(index<timeParts3.length){
             String[] timeParts5 = timeParts3[index].split("#");
             String[] seatParts1 = timeParts5[0].split("__");
-            int columnNumber = Integer.parseInt(seatParts1[1]);
-            int rowNumber = Integer.parseInt(seatParts1[0]);
+            int rowNumber = Integer.parseInt(seatParts1[1]);
+            int columnNumber = Integer.parseInt(seatParts1[0]);
             String username1 = timeParts5[1];
             String username2 = username1.trim();
             if(username2.equals("999")){

@@ -38,12 +38,12 @@ public class Screen extends Theater{
 
     public void reserveTheSeatAtRequiredPosition(int index,Login l){
         int index1 = 0;
-        for(Seat[] s1: seats){
-            for(Seat s2:s1){
+        for(int i = 0; i<seats.length;i++){
+            for(int j = 0; j<seats[i].length;j++){
+                index1 = Integer.parseInt(i+""+j);
                 if(index1 == index){
-                    s2.reserveSeat(l);
+                    seats[i][j].reserveSeat(l);
                 }
-                index1++;
             }
         }
     }
@@ -68,10 +68,13 @@ public class Screen extends Theater{
     }
 
     public void showAllFreeSeats(){
-        for (int i = 0; i < seats.length; i++) { // Outer loop for rows
-            for (int j = 0; j < seats[i].length; j++) { // Inner loop for seats in each row
+
+        int lenght = seats.length;
+        for (int i = 0; i < lenght; i++) {
+            int rowLenght = seats[i].length;// Outer loop for rows
+            for (int j = 0; j < rowLenght; j++) { // Inner loop for seats in each row
                 if (!seats[i][j].getStatus()) {
-                    System.out.println("Seat Number: " + index);
+                    System.out.println("Seat Number: " + seats[i][j].column+""+seats[i][j].row);
                 }
                 index++;
             }
@@ -79,18 +82,18 @@ public class Screen extends Theater{
 
     }
     public String toString(){
+
+        int lenght = seats.length;
         String s = "@"+numberOfRows+"_"+numberOfColumns;
-        int index1 = 0;
-        for(Seat[] column: seats){
-            int index2 = 0;
-            for(Seat row: column){
-                String seatNumber = "@"+index1+"__"+index2+row;
+        for (int i = 0; i < lenght; i++) {
+            int rowLenght = seats[i].length;
+            for (int j = 0; j < rowLenght; j++) {
+                String seatNumber = "@"+seats[i][j].column+"__"+seats[i][j].row+seats[i][j];
                 s = s + seatNumber;
-                index2++;
             }
-            index1++;
         }
         return s;
     }
 
 }
+

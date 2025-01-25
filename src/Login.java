@@ -25,14 +25,64 @@ public class Login {
         this.password = password;
         this.emailAddress = emailAddress;
     }
+    public static Login addUser() {
+        Scanner read = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = read.nextLine();
+        while (name.trim().isEmpty()) {
+            System.out.println("Name cannot be empty. Please enter a valid name:");
+            name = read.nextLine();
+        }
 
-    public static Login addUser(){
+        System.out.print("Enter telephone number: ");
+        String tnumber = read.nextLine();
+        while (!isValidPhoneNumber(tnumber)) {
+            System.out.println("Invalid telephone number. Please enter a valid number (only digits, 10-15 characters):");
+            tnumber = read.nextLine();
+        }
+
+        System.out.print("Enter email: ");
+        String email = read.nextLine();
+        while (!isValidEmail(email)) {
+            System.out.println("Invalid email address. Please enter a valid email:");
+            email = read.nextLine();
+        }
+
+        System.out.println("Enter userID: ");
+        String userID = read.next();
+        while (userID.trim().isEmpty()) {
+            System.out.println("UserID cannot be empty. Please enter a valid userID:");
+            userID = read.next();
+        }
+
+        System.out.print("Enter Password: ");
+        String password = read.next();
+        while (password.trim().isEmpty()) {
+            System.out.println("Password cannot be empty. Please enter a valid password:");
+            password = read.next();
+        }
+
+        Login user = new Login(name, tnumber, userID, password, email);
+        return user;
+    }
+
+    private static boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("\\d{10,15}"); // length between 10 and 15
+    }
+
+    private static boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailRegex);
+    }
+
+    /*public static Login addUser(){
 
         Scanner read = new Scanner(System.in);
         System.out.print("Enter name: ");
         String name = read.nextLine();
         System.out.print("Enter telephone Number: ");
         String tnumber = read.nextLine();
+
         System.out.print("Enter email: ");
         String email = read.nextLine();
         System.out.println("Enter userID: ");
@@ -42,7 +92,7 @@ public class Login {
         Login user = new Login(name,tnumber,userID,password,email);
 
         return user;
-    }
+    } */
 
     public void addUserToStorage(Login user){
         String user1 = user.userID + ".txt";
@@ -72,7 +122,8 @@ public class Login {
             }
             read.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred. No such file Exist. Enter correct username");
+            System.out.println("Wrong user ID or User Not Existed");
+
         }
 
         return list;
@@ -100,5 +151,55 @@ public class Login {
             System.out.println("Failed to delete the file.");
         }
     }
+
+    public boolean LogAdmin(String AdName, String Pass){
+        boolean reVal;
+        String[] admins = Admin();
+        String aName = admins[0];
+        String Passw  = admins[1];
+        if ((aName.equals(AdName)&&(aName.equals(Passw)))){
+            reVal = true;
+
+    } else{
+            reVal =false;
+        }
+
+    return reVal;
+
+    }
+    public static String[] Admin() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            String s = "admin.txt";
+            File file = new File(s);
+            Scanner read = new Scanner(file);
+
+            while (read.hasNextLine()) {
+                String data = read.nextLine().trim();
+                list.add(data);
+            }
+            read.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("ERROR: File not found");
+        }
+
+
+        return list.toArray(new String[0]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
