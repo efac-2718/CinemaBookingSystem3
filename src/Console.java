@@ -26,16 +26,16 @@ public class Console {
 
         System.out.println("\n********* Welcome to the Cinema Booking System *********");
         System.out.println("Enter your role: \n\t1.Admin\n\t2.User\n\t3.Exit");
-        System.out.print("Your choice: ");
-        int c = 0;
-        do {
 
+        int c=0;
+        do {
+            System.out.print("Your choice: ");
             try {
                 Scanner read = new Scanner(System.in);
 
                 c = read.nextInt();
             } catch (Exception e) {
-                System.out.println("Enter valid input");
+
             }
 
             if (c == 1) {
@@ -45,13 +45,17 @@ public class Console {
                 if (state) {
                     mainProcedure(userID);
                 }
+            }else if (c == 3){
+                System.out.println("Exiting System, Have a nice day!");
+                System.exit(0);
+            }else{
+                System.out.println("Invalid input");
             }
         }while(!((c == 1)||(c ==2)||(c == 3)));
-        if (c == 3){
-            System.out.println("Exiting System, Have a nice day!");
-            System.exit(0);
-        }
+
     }
+
+
     public void loginAdmin(){
         String adName;
         String PassW;
