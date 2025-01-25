@@ -23,7 +23,6 @@ public class CinemaBookingSystem {
     public static Movie findMovie(String name){
         for(Movie s: movies){
             if(s.getName().equals(name)){
-                System.out.println("The movie "+ name + " Exists");
                 return s;
             }
         }
@@ -36,9 +35,14 @@ public class CinemaBookingSystem {
     }
 
     public static void removeMovie(String name){
-        movies.remove(findMovie(name));
-        addMoviesToStorage();
-        System.out.println("Movie removal successful");
+        if(findMovie(name) != null) {
+            movies.remove(findMovie(name));
+            addMoviesToStorage();
+            System.out.println("Movie removal successful");
+        }
+        else{
+            System.out.println("The movie does not exist");
+        }
     }
 
     public static void showAllMovies(){

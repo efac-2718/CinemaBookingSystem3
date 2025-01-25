@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,145 +42,109 @@ public class Console {
                 loginAdmin();
             } else if (c == 2) {
                 user();
-
                 if (state) {
                     mainProcedure(userID);
                 }
             }
         }while(!((c == 1)||(c ==2)||(c == 3)));
         if (c == 3){
+            System.out.println("Exiting System, Have a nice day!");
             System.exit(0);
         }
     }
     public void loginAdmin(){
         String adName;
         String PassW;
-        Scanner read = new Scanner(System.in);
-        System.out.println("Enter Admin Name");
-        adName = read.next();
-
-        System.out.println("Enter Admin Password");
-        PassW = read.next();
-        Login Ad = new Login();
-        if ((Ad.LogAdmin(adName, PassW))){
-            admin();
-        }else{
-            System.out.println("Enter Valid Data");
-            new Console();
-        }
-    }
-    public void admin(){
-
-
-        int c =0;
+        boolean logState;
         do {
+            Scanner read = new Scanner(System.in);
+            System.out.println("Enter Admin Name");
+            adName = read.next();
+
+            System.out.println("Enter Admin Password");
+            PassW = read.next();
+            Login Ad = new Login();
+            logState =(Ad.LogAdmin(adName, PassW));
+            if (logState) {
+                admin();
+            } else {
+                System.out.println("Wrong Admin Name Password");
+                System.out.println("Enter Valid Data");
+
+            }
+        }while(!(logState));
+    }
+
+    public void admin() {
+        int c = 0;
+        while (!(c == 4)) {
             System.out.println("\n1.Add new movie");
             System.out.println("2.Show list of All movies");
             System.out.println("3.Remove movie");
-            System.out.println("4.Save and Exit");
+            System.out.println("4.Exit");
 
             Scanner read = new Scanner(System.in);
             System.out.print("Enter the number of your choice: ");
-             c = read.nextInt();
-            read.nextLine();
+            try {
+                c = read.nextInt();
+                read.nextLine();
 
-            if (c == 1) {
-                System.out.print("\nEnter the name of the movie: ");
-                String name = read.nextLine();
-                movieAddingProcedure();
-                Movie m = new Movie(name);
-                m.addDateList(dates);
-                m.addPrice(price);
-                CinemaBookingSystem.addMovie(m);
+                if (c == 1) {
+                    System.out.print("\nEnter the name of the movie: ");
+                    String name = read.nextLine();
+                    movieAddingProcedure();
+                    Movie m = new Movie(name);
+                    m.addDateList(dates);
+                    m.addPrice(price);
+                    CinemaBookingSystem.addMovie(m);
+                }
+                else if (c == 2) {
+                    System.out.println("List of All movies");
+                    CinemaBookingSystem.showAllMovies();
+
+                }
+                else if (c == 3) {
+                            System.out.println("Remove Movie");
+                            CinemaBookingSystem.showAllMovies();
+                            System.out.println("Enter the name of the movie: ");
+                            String name = read.next();
+                            CinemaBookingSystem.removeMovie(name);
+
+                }else if (c == 4){
+                    System.out.println("Closing Application .....");
+                }
+                else{
+                    System.out.println("Invalid input");
+                }
+
+            } catch (Exception e) {
+                System.out.println("Valid Input");
             }
 
-            if (c == 2) {
-                System.out.println("List of All movies");
-                CinemaBookingSystem.showAllMovies();
-            }
-
-            if (c == 3) {
-                System.out.println("Remove Movie");
-                CinemaBookingSystem.showAllMovies();
-                System.out.println("Enter the name of the movie: ");
-                String name = read.next();
-                CinemaBookingSystem.removeMovie(name);
-            }
-        }while(!(c ==4));
-
+        }
     }
 
+
     public void movieAddingProcedure(){
-        Scanner read = new Scanner(System.in);
-        System.out.println("When will the movie start screening");
-        int year = 0000;
-        int month = 00;
-        int date = 0;
-        try{
-            boolean correctdate = false;
-            do {
-                System.out.print("Year: ");
-                 year = read.nextInt();
 
-                // Validate year range
-                if (year < 2024 || year > 2100) {
-                    System.out.println("Enter Valid Year");
-                } else {
-                    System.out.print("Month: ");
-                    month = read.nextInt();
 
-                    if (month < 1 || month > 12) {
-                        System.out.println("Enter Valid Month");
-                    } else {
-                        System.out.print("Date: ");
-                         date = read.nextInt();
+            Scanner read = new Scanner(System.in);
+            System.out.println("When will the movie start screening");
+            System.out.print("Year: ");
+            int year = read.nextInt();
+            System.out.print("Month: ");
+            int month = read.nextInt();
+            System.out.print("Date: ");
+            int date = read.nextInt();
 
-                        if (date < 1 || date > 31) {
-                            System.out.println("Enter Valid Date");
-                        } else {
-                            if (month == 4 || month == 6 || month == 9 || month == 11) {
-                                if (date > 30) {
-                                    System.out.println("Invalid Date for the given Month");
-                                } else {
-                                    correctdate = true;
-                                }
-                            }
-                            else if (month == 2) {
-                                if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-                                    if (date > 29) {
-                                        System.out.println("Invalid Date for February in a Leap Year");
-                                    } else {
-                                        correctdate = true;
-                                    }
-                                } else {
-                                    if (date > 28) {
-                                        System.out.println("Invalid Date for February in a Non-Leap Year");
-                                    } else {
-                                        correctdate = true;
-                                    }
-                                }
-                            }
-                            else {
-                                correctdate = true;
-
-                            }
-                        }
-                    }
-                }
-            } while (!correctdate);
-            startDate.set(year,month-1,date);
-            numberOfColumns = numberOfColumns();
-            numberOfRows = numberOfRows();
-            price = price();
-            System.out.print("Enter the number of days the movie will be screening: ");
-            numberOfDays = read.nextInt();
-            dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
-            System.out.println("Added sucessfull");
-        } catch (Exception e) {
-            System.out.println("Enter valid data");
-        }finally {
-            admin();
-        }
+        startDate.set(year,month-1,date);
+        numberOfColumns = numberOfColumns();
+        numberOfRows = numberOfRows();
+        price = price();
+        System.out.print("Enter the number of days the movie will be screening: ");
+        numberOfDays = read.nextInt();
+        dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
+        System.out.println("Successfully initialised dates and times");
     }
 
     private List<Calendar> createListOfintances(){
@@ -346,13 +311,18 @@ public class Console {
             int seatNumber = read.nextInt();
             Login l = Login.getLoginObjectFromStorage(userID);
             findAndReserveRequestedSeat(seatNumber,l);
+            appendSeatNumberToLoginFile(seatNumber,userID,movieNumber);
             CinemaBookingSystem.addMoviesToStorage();
             System.out.println("Reserved seat number: "+seatNumber);
             System.out.print("Do you want to reserve another seat?(N/Y): ");
             s1 = read.next();
 
         }
-        System.out.println("Seat(/s) reservation successful");
+
+        Login l = Login.getLoginObjectFromStorage(userID);
+        System.out.println("Seat(/s) reservation successful\n");
+        System.out.println("Here is your receipt: ");
+        l.printReceipt();
 
     }
 
@@ -383,6 +353,14 @@ public class Console {
 
         }while((details.isEmpty()));
         return details;
+    }
+
+    public void appendSeatNumberToLoginFile(int seatNumber,String name,int movieIndex){
+        try (FileWriter fileWriter = new FileWriter(name+".txt", true)) {
+            fileWriter.write("\n"+movieIndex+"-"+seatNumber);
+        } catch (IOException e) {
+            System.out.println("Internal error");
+        }
     }
 
 

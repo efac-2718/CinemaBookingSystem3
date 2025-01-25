@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Login implements Authenticate{
@@ -135,20 +136,22 @@ public class Login implements Authenticate{
     }
 
     public boolean LogAdmin(String AdName, String Pass){
-        boolean reVal;
+        boolean reVal = false;
         String[] admins = Admin();
-        String aName = admins[0];
-        String Passw  = admins[1];
-        if ((aName.equals(AdName)&&(aName.equals(Passw)))){
-            reVal = true;
+        if (admins.length >= 2) {
+            String aName = admins[0];
+            String passw = admins[1];
 
-    } else{
-            reVal =false;
+            if (aName.equals(AdName) && passw.equals(Pass)) {
+                reVal = true;
+            }
+        } else {
+            System.out.println("ERROR: Invalid Data");
+
         }
-
-    return reVal;
-
+        return reVal;
     }
+
     public static String[] Admin() {
         ArrayList<String> list = new ArrayList<>();
         try {
@@ -184,4 +187,35 @@ public class Login implements Authenticate{
             return false;
         }
     }
+
+    public double getSumForReceipt(String userID){
+        ArrayList<String> list = new ArrayList<>();
+        list = getUserInfo(userID);
+        int index = 0;
+        double sum = 0;
+        for(String s: list){
+            index++;
+            if(index>5){
+                String[] price = s.split("-");
+                int movieNumber = Integer.parseInt(price[0]);
+                Movie m = CinemaBookingSystem.findMovieByIndex(movieNumber);
+                sum += m.getPrice();
+            }
+        }
+        return sum;
+    }
+
+    public void printReceipt(){
+        System.out.println("************************** Receipt *************************");
+        System.out.println("Name: "+ this.name);
+        System.out.println("User ID: "+this.userID);
+        System.out.println("Price: "+ "Rs."+getSumForReceipt(userID));
+        System.out.println("************************************************************");
+        Calendar c = Calendar.getInstance();
+        System.out.println("Receipt printed on :"+ c.getTime());
+        System.out.println("************************************************************");
+
+    }
+
+
 }
