@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Login {
+public class Login implements Authenticate{
 
     String name;
     private String telephoneNumber;
@@ -75,24 +75,6 @@ public class Login {
         return email.matches(emailRegex);
     }
 
-    /*public static Login addUser(){
-
-        Scanner read = new Scanner(System.in);
-        System.out.print("Enter name: ");
-        String name = read.nextLine();
-        System.out.print("Enter telephone Number: ");
-        String tnumber = read.nextLine();
-
-        System.out.print("Enter email: ");
-        String email = read.nextLine();
-        System.out.println("Enter userID: ");
-        String userID = read.next();
-        System.out.print("Enter Password:");
-        String password = read.next();
-        Login user = new Login(name,tnumber,userID,password,email);
-
-        return user;
-    } */
 
     public void addUserToStorage(Login user){
         String user1 = user.userID + ".txt";
@@ -187,19 +169,19 @@ public class Login {
         return list.toArray(new String[0]);
     }
 
+    public boolean authenticate(ArrayList<String> e){
 
+        System.out.print("Enter password: ");
+        Scanner read = new Scanner(System.in);
+        String password1 = read.next();
+        String password2 = password1.trim();  // remove font spaces
+        if(e.get(4).equals(password2)){ // array 5th data is password
+            return true;
+        }
+        else{
+            System.out.println("Password incorrect.");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            return false;
+        }
+    }
 }

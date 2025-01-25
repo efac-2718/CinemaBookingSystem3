@@ -41,6 +41,7 @@ public class Console {
                 loginAdmin();
             } else if (c == 2) {
                 user();
+
                 if (state) {
                     mainProcedure(userID);
                 }
@@ -179,39 +180,8 @@ public class Console {
         }finally {
             admin();
         }
-
-
-
-
-
-
-
     }
 
-/*
-    public void movieAddingProcedure(){
-        Scanner read = new Scanner(System.in);
-        System.out.println("When will the movie start screening");
-        System.out.print("Date: ");
-        int date = read.nextInt();
-        System.out.print("Month: ");
-        int month = read.nextInt();
-        System.out.print("Year: ");
-        int year = read.nextInt();
-        startDate.set(year,month-1,date);
-        numberOfColumns = numberOfColumns();
-        numberOfRows = numberOfRows();
-        price = price();
-        System.out.print("Enter the number of days the movie will be screening: ");
-        numberOfDays = read.nextInt();
-        dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
-        System.out.println("Successfully initialised dates and times");
-
-    }
-
-
-
-    */
     private List<Calendar> createListOfintances(){
         int index = 0;
         List<Calendar> list = new ArrayList<>();
@@ -311,7 +281,7 @@ public class Console {
             if (c1 == 1) {
                 Login l = Login.addUser();
                 l.addUserToStorage(l);
-                System.out.println("Please Loging Your Accout");
+                System.out.println("Please log into Your Account");
                 c1 = 0;
 //                details = Login.getUserInfo(l.userID);
 //                state = true;
@@ -321,7 +291,8 @@ public class Console {
             }else if (c1 == 2) {
                 getUserInfo();
                 userID = userID1;
-                if (authenticate(details)) {
+                Authenticate a = new Login(details.get(0),details.get(1),details.get(2),details.get(4),details.get(3));
+                if (a.authenticate(details)) {
                     System.out.println("Login successful");
                     state = true;
                 } else {
@@ -414,21 +385,6 @@ public class Console {
         return details;
     }
 
-    public static boolean authenticate(ArrayList<String> e){
-
-        System.out.print("Enter password: ");
-        Scanner read = new Scanner(System.in);
-        String password1 = read.next();
-        String password2 = password1.trim();  // remove font spaces
-        if(e.get(4).equals(password2)){ // array 5th data is password
-            return true;
-        }
-        else{
-            System.out.println("Password incorrect.");
-
-            return false;
-        }
-    }
 
     public static void main(String[] args){
         Console c1 = new Console();

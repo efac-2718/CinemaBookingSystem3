@@ -34,18 +34,15 @@ public class Seat {
             return "#"+login.userID;
     }
 
-    public void printReceipt(String name){
+    /*public String<> getDetailsToPrintReceipt(String name){
         Movie m = CinemaBookingSystem.findMovie(name);
         System.out.println("********* Receipt *********");
         System.out.println("Name: "+login.name);
         System.out.println("User ID: "+login.userID);
         System.out.println("Movie : "+m.getName());
-        System.out.println("Price: ");
-        System.out.println("Date of Screening :");
-        System.out.println("Time of screening :");
-        System.out.println("Theater :"+ m.getPrice());
+        System.out.println("Price: "+ m.getPrice());
         System.out.println("****************************");
         System.out.println("Receipt printed on :"+ Calendar.getInstance());
         System.out.println("****************************");
-    }
+    }*/
 }
