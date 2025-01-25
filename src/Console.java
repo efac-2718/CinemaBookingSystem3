@@ -130,25 +130,74 @@ public class Console {
 
 
     public void movieAddingProcedure(){
+        Scanner read = new Scanner(System.in);
+        System.out.println("When will the movie start screening");
+        int year = 0000;
+        int month = 00;
+        int date = 0;
+        try{
+            boolean correctdate = false;
+            do {
+                System.out.print("Year: ");
+                year = read.nextInt();
 
+                // Validate year range
+                if (year < 2024 || year > 2100) {
+                    System.out.println("Enter Valid Year");
+                } else {
+                    System.out.print("Month: ");
+                    month = read.nextInt();
 
-            Scanner read = new Scanner(System.in);
-            System.out.println("When will the movie start screening");
-            System.out.print("Year: ");
-            int year = read.nextInt();
-            System.out.print("Month: ");
-            int month = read.nextInt();
-            System.out.print("Date: ");
-            int date = read.nextInt();
+                    if (month < 1 || month > 12) {
+                        System.out.println("Enter Valid Month");
+                    } else {
+                        System.out.print("Date: ");
+                        date = read.nextInt();
 
-        startDate.set(year,month-1,date);
-        numberOfColumns = numberOfColumns();
-        numberOfRows = numberOfRows();
-        price = price();
-        System.out.print("Enter the number of days the movie will be screening: ");
-        numberOfDays = read.nextInt();
-        dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
-        System.out.println("Successfully initialised dates and times");
+                        if (date < 1 || date > 31) {
+                            System.out.println("Enter Valid Date");
+                        } else {
+                            if (month == 4 || month == 6 || month == 9 || month == 11) {
+                                if (date > 30) {
+                                    System.out.println("Invalid Date for the given Month");
+                                } else {
+                                    correctdate = true;
+                                }
+                            }
+                            else if (month == 2) {
+                                if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+                                    if (date > 29) {
+                                        System.out.println("Invalid Date for February in a Leap Year");
+                                    } else {
+                                        correctdate = true;
+                                    }
+                                } else {
+                                    if (date > 28) {
+                                        System.out.println("Invalid Date for February in a Non-Leap Year");
+                                    } else {
+                                        correctdate = true;
+                                    }
+                                }
+                            }
+                            else {
+                                correctdate = true;
+
+                            }
+                        }
+                    }
+                }
+            } while (!correctdate);
+            startDate.set(year,month-1,date);
+            numberOfColumns = numberOfColumns();
+            numberOfRows = numberOfRows();
+            price = price();
+            System.out.print("Enter the number of days the movie will be screening: ");
+            numberOfDays = read.nextInt();
+            dates = addTimesToTheDateList(listOfDatesForInstances(createListOfintances()));
+            System.out.println("Successfully initialised dates and times");
+        } catch (Exception e) {
+            System.out.println("Enter valid data");
+        }
     }
 
     private List<Calendar> createListOfintances(){
