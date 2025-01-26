@@ -4,7 +4,7 @@ import java.util.List;
 public class Movie {
 
     private String name;
-    private List<Date> dates;
+    List<Date> dates;
     private double price;
     private int dateCount;
     int datePrintingCount;

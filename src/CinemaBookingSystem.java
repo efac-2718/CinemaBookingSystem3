@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class CinemaBookingSystem {
 
-    private static ArrayList<Movie> movies = new ArrayList<>();
+     static ArrayList<Movie> movies = new ArrayList<>();
     private static String[] dataByParts;
     public CinemaBookingSystem(){
         //getMoviesFromStorage();
@@ -31,7 +31,11 @@ public class CinemaBookingSystem {
     }
 
     public static Movie findMovieByIndex(int index){
-        return movies.get(index-1);
+        if(index>0 && index<=movies.size()){
+            return movies.get(index-1);
+        }else{
+            return null;
+        }
     }
 
     public static void removeMovie(String name){

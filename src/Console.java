@@ -477,7 +477,7 @@ public class Console {
 
     public void appendSeatNumberToLoginFile(int seatNumber,String name,int movieIndex){
         try (FileWriter fileWriter = new FileWriter(name+".txt", true)) {
-            fileWriter.write("\n"+movieIndex+"-"+seatNumber);
+            fileWriter.write("\n"+movieIndex+"-"+position[0]+"-"+position[1]+"-"+seatNumber);
         } catch (IOException e) {
             System.out.println("Internal error");
         }

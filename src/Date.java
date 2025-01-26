@@ -6,7 +6,7 @@ public class Date {
     private int day;
     private int month;
     private int year;
-    private List<Time> times;
+    List<Time> times;
     private int timeCount;
 
     public Date(int day,int month,int year){
