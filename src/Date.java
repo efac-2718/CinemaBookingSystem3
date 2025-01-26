@@ -43,12 +43,11 @@ public class Date {
     @Override
     public String toString(){
         addTimeCount();
-        String s = String.format("%02d/%02d/%02d", day, month, year) +"--"+ timeCount;
+        String s = String.format("%02d/%02d/%02d",day,month,year)+"--"+timeCount;
         for(Time t: times){
             String sTemp = s +"--"+t;
             s = sTemp;
         }
-
         return s;
     }
 

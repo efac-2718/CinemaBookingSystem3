@@ -50,7 +50,7 @@ public class Login implements Authenticate{
             email = read.nextLine();
         }
 
-        System.out.println("Enter userID: ");
+        System.out.println("Enter userID(Use only letters and number): ");
         String userID = read.next();
         while (userID.trim().isEmpty()) {
             System.out.println("UserID cannot be empty. Please enter a valid userID:");
@@ -194,8 +194,8 @@ public class Login implements Authenticate{
         System.out.print("Enter password: ");
         Scanner read = new Scanner(System.in);
         String password1 = read.next();
-        String password2 = password1.trim();  // remove font spaces
-        if(e.get(4).equals(password2)){ // array 5th data is password
+        String password2 = password1.trim();  // remove front spaces
+        if(e.get(4).equals(password2)){ // 5th element of the array is password
             return true;
         }
         else{
